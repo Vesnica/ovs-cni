@@ -30,7 +30,7 @@ type NetConf struct {
 	SocketFile             string   `json:"socket_file"`
 	LinkStateCheckRetries  int      `json:"link_state_check_retries"`
 	LinkStateCheckInterval int      `json:"link_state_check_interval"`
-	InterfaceType          string   `json:"iface_type"`
+	InterfaceType          string   `json:"iface_type,omitempty"`
 }
 
 // Trunk containing selective vlan IDs
