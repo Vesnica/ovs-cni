@@ -241,6 +241,10 @@ func CmdAdd(args *skel.CmdArgs) error {
 	if err != nil {
 		return err
 	}
+	
+	if netconf.InterfaceType == nil {
+        ifaceType := ""
+	}
 
 	var vlanTagNum uint = 0
 	trunks := make([]uint, 0)
@@ -301,7 +305,7 @@ func CmdAdd(args *skel.CmdArgs) error {
 		}
 	}
 
-	if err = attachIfaceToBridge(ovsDriver, hostIface.Name, contIface.Name, vlanTagNum, trunks, portType, args.Netns, ovnPort, netconf.InterfaceType); err != nil {
+	if err = attachIfaceToBridge(ovsDriver, hostIface.Name, contIface.Name, vlanTagNum, trunks, portType, args.Netns, ovnPort, ifaceType); err != nil {
 		return err
 	}
 
