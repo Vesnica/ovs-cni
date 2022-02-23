@@ -143,8 +143,8 @@ func (ovsd *OvsDriver) ovsdbTransact(ops []ovsdb.Operation) ([]ovsdb.OperationRe
 // **************** OVS driver API ********************
 
 // CreatePort Create an internal port in OVS
-func (ovsd *OvsBridgeDriver) CreatePort(intfName, contNetnsPath, contIfaceName, ovnPortName string, vlanTag uint, trunks []uint, portType string) error {
-	intfUUID, intfOp, err := createInterfaceOperation(intfName, ovnPortName)
+func (ovsd *OvsBridgeDriver) CreatePort(intfName, contNetnsPath, contIfaceName, ovnPortName string, vlanTag uint, trunks []uint, portType string, ifaceType string) error {
+	intfUUID, intfOp, err := createInterfaceOperation(intfName, ovnPortName, ifaceType)
 	if err != nil {
 		return err
 	}
@@ -479,12 +479,13 @@ func (ovsd *OvsDriver) findByCondition(table string, condition ovsdb.Condition, 
 	return operationResult.Rows[0], nil
 }
 
-func createInterfaceOperation(intfName, ovnPortName string) (ovsdb.UUID, *ovsdb.Operation, error) {
+func createInterfaceOperation(intfName, ovnPortName, ifaceType string) (ovsdb.UUID, *ovsdb.Operation, error) {
 	intfUUIDStr := fmt.Sprintf("Intf%s", intfName)
 	intfUUID := ovsdb.UUID{GoUUID: intfUUIDStr}
 
 	intf := make(map[string]interface{})
 	intf["name"] = intfName
+	intf["type"] = ifaceType
 
 	// Configure interface ID for ovn
 	if ovnPortName != "" {
