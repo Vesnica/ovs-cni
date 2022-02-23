@@ -241,10 +241,6 @@ func CmdAdd(args *skel.CmdArgs) error {
 	if err != nil {
 		return err
 	}
-	
-	if netconf.InterfaceType == nil {
-        ifaceType := ""
-	}
 
 	var vlanTagNum uint = 0
 	trunks := make([]uint, 0)
